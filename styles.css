@@ -1,0 +1,71 @@
+:root {
+  --side-info-portion: 0;
+}
+
+body {
+  display: grid;
+  margin: 0;
+  grid-template-columns: 1fr 0.3fr;
+  grid-template-rows: 0.12fr 1fr;
+  height: 100vh;
+  background-color: hsl(185, 96%, 90%);
+  font-family: Arial, sans-serif;
+  transition: 0.2s;
+}
+
+body.hidden {
+  grid-template-columns: 1fr 0fr;
+}
+body.hidden .side-info div {
+  width: 0;
+  display: none;
+}
+
+.top {
+  grid-column: 1/-1;
+  background-color: #60a5fa;
+  color: hsl(185, 15%, 90%);
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 0 5px 5px lightgray;
+}
+
+.main {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+.main .lib-book {
+  height: 300px;
+  width: 200px;
+  background-color: antiquewhite;
+  border: 2px solid hsl(34, 78%, 81%);
+  box-shadow: 2px 2px 5px lightgray;
+  padding: 10px;
+  text-align: center;
+  display: grid;
+}
+.main .lib-book .author {
+  align-self: end;
+}
+
+.side-info {
+  --side-info-portion: 0.3fr;
+  transition: 0.3s;
+  background-color: #a5f3fc;
+  box-shadow: 0 0 5px lightgray;
+  overflow: hidden;
+  padding: 20px 0;
+}
+.side-info div {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 20px;
+}
+.side-info span {
+  width: 40%;
+}
+
+.side-info .hidden {
+  --side-info-portion: 0fr;
+}/*# sourceMappingURL=styles.css.map */
