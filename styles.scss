@@ -80,9 +80,30 @@ body.hidden{
             transform: translate(0px, -4px);
             filter: brightness(98%);
         }
+
+        .title{
+            margin-top : 1.5rem;
+        }
         
         .author{
            align-self: end;
+           margin-bottom: 3rem;
+        }
+        .delete{
+            position: absolute;
+            bottom: 0;
+            left: calc(50% - 1rem);
+            width: 2rem;
+            transform-origin: center center;
+            
+            filter: brightness(70%);
+            &:hover{
+                filter: brightness(90%);
+            }
+            &:active{
+                filter: brightness(90%);
+                transform: scale(90%, 90%);
+            }
         }
     }
 }

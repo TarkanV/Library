@@ -19,25 +19,37 @@ main.addEventListener("click", (e) => {
 });
 
 
-function Book(title, author, pages, status, index){
+function Book(title, author, pages, status){
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.status = status;
-    this.index = index;
+
 }
-   
+    
 
 const templateBook = document.querySelector("#template-book");
 const addBookBox = document.querySelector(".add-book");
 
+// Deleting book
+
+function deleteBook(bookBtn){
+    bookBtn.addEventListener("click", (e) =>{
+        const i =  Array.prototype.indexOf.call(bookBtn.parentNode.children, bookBtn);
+        bookLibrary.splice(i, 1);
+    
+        main.removeChild(bookBtn.parentNode);      
+    });
+}
+
 // Takes a Book from library array and creates a html Element in the DOM from it 
-function createBookElement(book){
+function createBookElement(book, index){
     const bookElement = templateBook.content.cloneNode(true).querySelector(".lib-book");
     bookElement.dataset.index = book.index;
     bookElement.querySelector(".title").textContent = book.title;
     bookElement.querySelector(".author").textContent = book.author;
     main.insertBefore(bookElement, addBookBox);
+    deleteBook(bookElement.querySelector(".delete"));
     return bookElement;
 }
 
@@ -46,15 +58,15 @@ function createBookElement(book){
 
 // Loads the already saved library
 function loadLibrary(){
-    bookLibrary.forEach((book) => {
-        createBookElement(book);
+    bookLibrary.forEach((book, index) => {
+        createBookElement(book, index);
     });
 }
 
 
-bookLibrary.push(new Book('Ultimate Placeholder Book', "John Doe", "420", true, bookLibrary.length));
+bookLibrary.push(new Book('Ultimate Placeholder Book', "John Doe", "420", true));
 
-bookLibrary.push(new Book('How to Do Stuff', "Guru-Man", "42", false, bookLibrary.length));
+bookLibrary.push(new Book('How to Do Stuff', "Guru-Man", "42", false));
 
 
 
@@ -64,22 +76,22 @@ const libBook = document.querySelectorAll(".lib-book");
 
 // Shows the side bar info when a book is clicked on   
 
-function setBookInfo(bookNode){
+function setBookInfo(bookNode, index){
     bookNode.addEventListener("click", (e) => {
-       
-        body.classList.toggle("hidden", false);
-        const book = bookLibrary[bookNode.dataset.index];
-        
-        side.querySelector(".title span").textContent = book.title;
-        side.querySelector(".author span").textContent = book.author;
-        side.querySelector(".pages span").textContent = book.pages;
-        side.querySelector(".status span").textContent = (book.status) ? "Read" : "Not Read";
-    
+    if(e.target.classList[0] !== "delete"){
+            body.classList.toggle("hidden", false);
+            const book = bookLibrary[index];
+            
+            side.querySelector(".title span").textContent = book.title;
+            side.querySelector(".author span").textContent = book.author;
+            side.querySelector(".pages span").textContent = book.pages;
+            side.querySelector(".status span").textContent = (book.status) ? "Read" : "Not Read";
+        }
 });
 
 }
 function setBookInfoAll(){
-    libBook.forEach((bookNode) => {setBookInfo(bookNode);}, true);
+    libBook.forEach((bookNode, index) => {setBookInfo(bookNode, index);}, true);
 }
 
 const form = document.querySelector(".book-setup");
@@ -108,13 +120,16 @@ function addFormBook(){
         e.preventDefault();
         const formData = new FormData(form);
         const book = new Book(formData.get('title'), formData.get('author'), 
-                            formData.get('pages'), formData.get('status'), bookLibrary.length);
+                            formData.get('pages'), formData.get('status'));
         bookLibrary.push(book);
-        setBookInfo(createBookElement(book));
+        setBookInfo(createBookElement(book), bookLibrary.length - 1);
         resetFormData();
         bookSetup.classList.toggle("hidden");
     });
 }
+
+
+
 
 
 

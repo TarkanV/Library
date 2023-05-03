@@ -75,8 +75,27 @@ body.hidden .side-info div {
   transform: translate(0px, -4px);
   filter: brightness(98%);
 }
+.main .lib-book .title {
+  margin-top: 1.5rem;
+}
 .main .lib-book .author {
   align-self: end;
+  margin-bottom: 3rem;
+}
+.main .lib-book .delete {
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 1rem);
+  width: 2rem;
+  transform-origin: center center;
+  filter: brightness(70%);
+}
+.main .lib-book .delete:hover {
+  filter: brightness(90%);
+}
+.main .lib-book .delete:active {
+  filter: brightness(90%);
+  transform: scale(90%, 90%);
 }
 
 .back-book-setup {
@@ -113,6 +132,7 @@ body.hidden .side-info div {
   justify-content: space-between;
   gap: 50px;
 }
+
 .side-info {
   --side-info-portion: 0.3fr;
   transition: 0.3s;
