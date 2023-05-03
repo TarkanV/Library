@@ -3,6 +3,7 @@
 }
 
 body{
+    position: relative;
     display: grid;
     margin: 0;
     grid-template-columns: 1fr 0.3fr;
@@ -37,20 +38,93 @@ body.hidden{
     padding: 10px;
     display: flex;
     gap: 10px;
-    .lib-book{
+    flex-wrap: wrap;
+    %book{
         height: 300px;
         width: 200px;
-        background-color: antiquewhite;
-        border : 2px solid hsl(34, 78%, 81%);
+        
         box-shadow: 2px 2px 5px lightgray;
         padding: 10px;
+    }
+    .add-book{
+        @extend %book;
+        background-color:  hsl(185, 76%, 95%);
+        border: 2px solid hsl(185, 50%, 90%);
+        box-shadow: 0 0 2px lightgrey;
+        display: grid;
+        place-items: center;
+        &:hover{
+            filter: brightness(97%);
+        }
+        &:active{
+            box-shadow: inset 2px 2px 0px lightgrey;
+            filter: brightness(95%);
+            img{
+                width: 45px;
+                filter: invert(50%);
+            }
+        }
+        img{
+            width : 50px;
+        }
+    }
+    .lib-book{
+        @extend %book;
+        border : 2px solid hsl(34, 78%, 81%);
+        background-color: antiquewhite;
         text-align: center;
         display: grid;
+        position: relative;
+
+        &:hover{
+            transform: translate(0px, -4px);
+            filter: brightness(98%);
+        }
         
         .author{
            align-self: end;
         }
     }
+}
+.back-book-setup{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    &::before{
+        content: "";
+        position: absolute;
+        width: 100%;
+        height : 100%;
+        background-color: black;
+        opacity: 20%;
+        z-index: 2;
+    }
+    &.hidden{
+       display: none; 
+    }
+}
+.book-setup{
+    z-index: 3;
+    position: relative;
+
+    background-color: lightslategray;
+    border-radius: 20px;
+    padding: 30px;
+    place-self: center;
+    color:azure;
+    
+    p{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 50px;
+        
+    }
+
+    
+ 
+    
 }
 
 .side-info{
@@ -67,10 +141,15 @@ body.hidden{
         display : flex;
         justify-content: space-between;
         padding: 5px 20px;
+        color: hsl(0, 0%, 25%);
+        font-family: Courier, sans-serif;
     }
     
     span{
         width : 40%;
+        color : hsl(0, 0%, 25%);
+        
+        font-family: arial, sans-serif;
     }
     
     
