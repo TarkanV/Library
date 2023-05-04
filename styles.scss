@@ -6,7 +6,7 @@ body{
     position: relative;
     display: grid;
     margin: 0;
-    grid-template-columns: 1fr 0.3fr;
+    grid-template-columns: 1.1fr 0.3fr;
     grid-template-rows: 0.12fr 1fr;
     height : 100vh;
     background-color: hsl(185, 96%, 90%);
@@ -14,7 +14,7 @@ body{
     transition : 0.2s;    
 }
 body.hidden{
-    grid-template-columns: 1fr 0fr;
+    grid-template-columns: 1.1fr 0fr;
 
     .side-info div{
         width: 0;
@@ -108,7 +108,8 @@ body.hidden{
     }
 }
 .back-book-setup{
-    position: absolute;
+    position: fixed;
+    
     width: 100%;
     height: 100%;
     display: grid;

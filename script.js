@@ -35,7 +35,9 @@ const addBookBox = document.querySelector(".add-book");
 
 function deleteBook(bookBtn){
     bookBtn.addEventListener("click", (e) =>{
-        const i =  Array.prototype.indexOf.call(bookBtn.parentNode.children, bookBtn);
+        
+        const i =  Array.prototype.indexOf.call(bookBtn.parentNode.parentNode.children, bookBtn.parentNode) - 1;
+        console.log(`Value : ${i}`);
         bookLibrary.splice(i, 1);
     
         main.removeChild(bookBtn.parentNode);      
@@ -43,9 +45,9 @@ function deleteBook(bookBtn){
 }
 
 // Takes a Book from library array and creates a html Element in the DOM from it 
-function createBookElement(book, index){
+function createBookElement(book){
     const bookElement = templateBook.content.cloneNode(true).querySelector(".lib-book");
-    bookElement.dataset.index = book.index;
+    //bookElement.dataset.index = book.index;
     bookElement.querySelector(".title").textContent = book.title;
     bookElement.querySelector(".author").textContent = book.author;
     main.insertBefore(bookElement, addBookBox);
@@ -58,8 +60,8 @@ function createBookElement(book, index){
 
 // Loads the already saved library
 function loadLibrary(){
-    bookLibrary.forEach((book, index) => {
-        createBookElement(book, index);
+    bookLibrary.forEach((book) => {
+        createBookElement(book);
     });
 }
 
@@ -69,17 +71,18 @@ bookLibrary.push(new Book('Ultimate Placeholder Book', "John Doe", "420", true))
 bookLibrary.push(new Book('How to Do Stuff', "Guru-Man", "42", false));
 
 
-
 loadLibrary();
 
 const libBook = document.querySelectorAll(".lib-book");
 
 // Shows the side bar info when a book is clicked on   
 
-function setBookInfo(bookNode, index){
+function setBookInfo(bookNode){
     bookNode.addEventListener("click", (e) => {
     if(e.target.classList[0] !== "delete"){
             body.classList.toggle("hidden", false);
+            let index = Array.prototype.indexOf.call(bookNode.parentNode.children, bookNode) - 1;
+            console.log(`Index : ${index} and ${bookNode.children[0].textContent}`);
             const book = bookLibrary[index];
             
             side.querySelector(".title span").textContent = book.title;
@@ -91,7 +94,7 @@ function setBookInfo(bookNode, index){
 
 }
 function setBookInfoAll(){
-    libBook.forEach((bookNode, index) => {setBookInfo(bookNode, index);}, true);
+    libBook.forEach((bookNode) => {setBookInfo(bookNode);}, true);
 }
 
 const form = document.querySelector(".book-setup");
@@ -122,7 +125,7 @@ function addFormBook(){
         const book = new Book(formData.get('title'), formData.get('author'), 
                             formData.get('pages'), formData.get('status'));
         bookLibrary.push(book);
-        setBookInfo(createBookElement(book), bookLibrary.length - 1);
+        setBookInfo(createBookElement(book));
         resetFormData();
         bookSetup.classList.toggle("hidden");
     });
