@@ -31,27 +31,53 @@ function Book(title, author, pages, status){
 const templateBook = document.querySelector("#template-book");
 const addBookBox = document.querySelector(".add-book");
 
+
+
+function getIndex(element){
+
+}
+
+function changeReadStatus(bookNode){
+    const readStatus = bookNode.querySelector(".read-status");
+    readStatus.addEventListener("click", (e) => {
+        console.log(`BookNode : ${bookNode.parentNode.classList[0]}`);
+        const i = Array.prototype.indexOf.call(bookNode.parentNode.children, bookNode) - 1;
+        bookLibrary[i].status = !bookLibrary[i].status;
+        readStatus.textContent = (!bookLibrary[i].status) ? "Not Read" : "Read";
+        side.querySelector(".status span").textContent = readStatus.textContent;
+        readStatus.classList.toggle("not-read");
+    });
+}
+
 // Deleting book
 
-function deleteBook(bookBtn){
+function deleteBook(bookNode){
+    const bookBtn = bookNode.querySelector(".delete");
     bookBtn.addEventListener("click", (e) =>{
         
-        const i =  Array.prototype.indexOf.call(bookBtn.parentNode.parentNode.children, bookBtn.parentNode) - 1;
-        console.log(`Value : ${i}`);
+        const i =  Array.prototype.indexOf.call(bookNode.parentNode.children, bookNode) - 1;
+       
         bookLibrary.splice(i, 1);
     
-        main.removeChild(bookBtn.parentNode);      
+        main.removeChild(bookNode);      
     });
 }
 
 // Takes a Book from library array and creates a html Element in the DOM from it 
 function createBookElement(book){
     const bookElement = templateBook.content.cloneNode(true).querySelector(".lib-book");
-    //bookElement.dataset.index = book.index;
+   
     bookElement.querySelector(".title").textContent = book.title;
     bookElement.querySelector(".author").textContent = book.author;
+    const status = bookElement.querySelector(".read-status");
+    if(!book.status) {
+        status.textContent = "Not Read";
+        status.classList.toggle("not-read");
+    }
+        
     main.insertBefore(bookElement, addBookBox);
-    deleteBook(bookElement.querySelector(".delete"));
+    deleteBook(bookElement);
+    changeReadStatus(bookElement);
     return bookElement;
 }
 
@@ -79,11 +105,12 @@ const libBook = document.querySelectorAll(".lib-book");
 
 function setBookInfo(bookNode){
     bookNode.addEventListener("click", (e) => {
-    if(e.target.classList[0] !== "delete"){
+        console.log(`Target : ${e.target.classList[0]}`);
+        if(e.target.classList[0] !== "delete" && e.target.classList[0] !== "read-status"){
             body.classList.toggle("hidden", false);
-            let index = Array.prototype.indexOf.call(bookNode.parentNode.children, bookNode) - 1;
-            console.log(`Index : ${index} and ${bookNode.children[0].textContent}`);
-            const book = bookLibrary[index];
+            const i = Array.prototype.indexOf.call(bookNode.parentNode.children, bookNode) - 1;
+            
+            const book = bookLibrary[i];
             
             side.querySelector(".title span").textContent = book.title;
             side.querySelector(".author span").textContent = book.author;
@@ -141,6 +168,3 @@ function addFormBook(){
 showBookSetup();
 addFormBook();
 setBookInfoAll();  
-
-
-

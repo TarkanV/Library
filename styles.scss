@@ -75,6 +75,7 @@ body.hidden{
         text-align: center;
         display: grid;
         position: relative;
+        grid-template-rows: 0.3fr 1fr 0.6fr 0.3fr;
 
         &:hover{
             transform: translate(0px, -4px);
@@ -82,7 +83,7 @@ body.hidden{
         }
 
         .title{
-            margin-top : 1.5rem;
+            margin-top : 0;
         }
         
         .author{
@@ -90,11 +91,13 @@ body.hidden{
            margin-bottom: 3rem;
         }
         .delete{
-            position: absolute;
-            bottom: 0;
-            left: calc(50% - 1rem);
+            grid-row : 1/1;
             width: 2rem;
+            justify-self: end;
             transform-origin: center center;
+            position: relative;
+            right : -15px;
+            top: -15px;
             
             filter: brightness(70%);
             &:hover{
@@ -103,6 +106,13 @@ body.hidden{
             &:active{
                 filter: brightness(90%);
                 transform: scale(90%, 90%);
+            }
+        }
+        .read-status{
+            background-color: hsl(120, 100%, 80%);   
+            height: 2rem;
+            &.not-read{
+                background-color: hsl(0, 100%, 80%);
             }
         }
     }
@@ -142,6 +152,22 @@ body.hidden{
         justify-content: space-between;
         gap: 50px;
         
+    }
+    .setup-buttons{
+        display: flex;
+        justify-content: space-around;
+    }
+    .setup-button, .cancel-button{
+        background-color: cadetblue;
+        color: white;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        margin : 0 auto;
+        &:active{
+            box-shadow: inset 0 0 5px hsl(0, 0%, 36%);
+        }
     }
 
     

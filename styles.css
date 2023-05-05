@@ -70,24 +70,27 @@ body.hidden .side-info div {
   text-align: center;
   display: grid;
   position: relative;
+  grid-template-rows: 0.3fr 1fr 0.6fr 0.3fr;
 }
 .main .lib-book:hover {
   transform: translate(0px, -4px);
   filter: brightness(98%);
 }
 .main .lib-book .title {
-  margin-top: 1.5rem;
+  margin-top: 0;
 }
 .main .lib-book .author {
   align-self: end;
   margin-bottom: 3rem;
 }
 .main .lib-book .delete {
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 1rem);
+  grid-row: 1/1;
   width: 2rem;
+  justify-self: end;
   transform-origin: center center;
+  position: relative;
+  right: -15px;
+  top: -15px;
   filter: brightness(70%);
 }
 .main .lib-book .delete:hover {
@@ -96,6 +99,13 @@ body.hidden .side-info div {
 .main .lib-book .delete:active {
   filter: brightness(90%);
   transform: scale(90%, 90%);
+}
+.main .lib-book .read-status {
+  background-color: hsl(120, 100%, 80%);
+  height: 2rem;
+}
+.main .lib-book .read-status.not-read {
+  background-color: hsl(0, 100%, 80%);
 }
 
 .back-book-setup {
@@ -131,6 +141,22 @@ body.hidden .side-info div {
   display: flex;
   justify-content: space-between;
   gap: 50px;
+}
+.book-setup .setup-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+.book-setup .setup-button, .book-setup .cancel-button {
+  background-color: cadetblue;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  margin: 0 auto;
+}
+.book-setup .setup-button:active, .book-setup .cancel-button:active {
+  box-shadow: inset 0 0 5px hsl(0, 0%, 36%);
 }
 
 .side-info {
